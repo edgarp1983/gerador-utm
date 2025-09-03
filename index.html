@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Nomenclatura para Campanhas e UTMS - Meta Ads</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Gerador de Nomenclatura e UTMs</h1>
+            <p class="mt-2 text-lg text-gray-600">Para Campanhas de Anúncios</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <!-- Coluna de Entradas -->
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                <form id="naming-form">
+                    <!-- Seleção de Plataforma -->
+                    <section class="mb-8">
+                        <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">Plataforma</h2>
+                        <div class="input-group">
+                            <label for="plataforma">Selecione a Plataforma</label>
+                            <select id="plataforma" class="persist">
+                                <option value="META">Meta Ads (Facebook/Instagram)</option>
+                                <option value="GOOGLE">Google Ads</option>
+                            </select>
+                        </div>
+                    </section>
+                    <!-- 1. Nomenclatura da Campanha -->
+                    <section class="mb-8">
+                        <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">1. Nomenclatura da Campanha</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="input-group"><label for="tipo">TIPO</label><select id="tipo" class="persist tooltip-target"></select></div>
+                            <div class="input-group"><label for="objetivo">OBJETIVO</label><select id="objetivo" class="persist tooltip-target"></select></div>
+                            <div class="input-group"><label for="estrategia">ESTRATEGIA</label><select id="estrategia" class="persist tooltip-target"></select></div>
+                            <div class="input-group"><label for="publico">PÚBLICO</label><select id="publico" class="persist tooltip-target"></select></div>
+                             <div class="input-group sm:col-span-2">
+                                <label for="data">DATA (MMDD)</label>
+                                <input type="text" id="data" maxlength="4" class="persist">
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- 2. Nomenclatura do Conjunto de Anúncios -->
+                    <section class="mb-8">
+                         <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">2. Nomenclatura do Conjunto</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="input-group"><label for="pais">PAÍS (Sigla)</label><input type="text" id="pais" value="BR" class="persist"></div>
+                            <div class="input-group"><label for="cidade">CIDADE/REGIÃO</label><input type="text" id="cidade" value="TODOS" class="persist"></div>
+                            <div class="input-group"><label for="idade">IDADE (Faixa)</label><input type="text" id="idade" value="25-45" class="persist"></div>
+                             <div class="input-group"><label for="genero">GÊNERO</label><select id="genero" class="persist tooltip-target"></select></div>
+                             <div class="input-group sm:col-span-2"><label for="posicionamento">POSICIONAMENTO</label><select id="posicionamento" class="persist tooltip-target"></select></div>
+                        </div>
+                    </section>
+                    
+                     <!-- 3. Nomenclatura do Anúncio -->
+                    <section class="mb-8">
+                         <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">3. Nomenclatura do Anúncio</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="input-group"><label for="id_anuncio">ID (Sequencial)</label><input type="number" id="id_anuncio" value="1" min="1" class="persist"></div>
+                             <div class="input-group"><label for="formato">FORMATO</label><select id="formato" class="persist tooltip-target"></select></div>
+                            <div class="input-group"><label for="descricao">DESCRIÇÃO</label><input type="text" id="descricao" value="PRODUTO_A" class="persist"></div>
+                             <div class="input-group"><label for="apelo">APELO</label><select id="apelo" class="persist tooltip-target"></select></div>
+                        </div>
+                    </section>
+                    
+                    <!-- 4. Gerador de UTM -->
+                    <section class="mb-8">
+                        <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">4. Gerador de UTM</h2>
+                        <div class="input-group"><label for="utm_medium">UTM Medium</label><select id="utm_medium" class="persist tooltip-target"></select></div>
+                    </section>
+
+                    <!-- 5. Gerenciador de Opções -->
+                    <section class="mb-8">
+                        <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">5. Gerenciar Opções das Listas</h2>
+                        <div class="input-group">
+                            <label for="field-to-edit">Selecione a lista para gerenciar</label>
+                            <select id="field-to-edit"></select>
+                        </div>
+                        <div id="options-manager" class="mt-4 space-y-2"></div>
+                        <div class="mt-4 flex gap-2">
+                            <input type="text" id="new-option-input" placeholder="Digite a nova opção" class="flex-grow">
+                            <button type="button" id="add-option-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Adicionar</button>
+                        </div>
+                    </section>
+
+                    <!-- 6. Dicionário de Termos -->
+                    <section>
+                        <h2 class="text-2xl font-semibold border-b pb-3 mb-4 text-gray-800">6. Dicionário de Termos</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-3">Editar Termos Existentes</h3>
+                            <div class="input-group">
+                                <label for="dict-term-select">Selecione um termo para editar</label>
+                                <select id="dict-term-select"></select>
+                            </div>
+                            <div class="input-group">
+                                <label for="dict-term-meaning">Significado</label>
+                                <textarea id="dict-term-meaning" rows="3"></textarea>
+                            </div>
+                            <div class="flex gap-2">
+                                <div id="dict-actions-normal" class="flex gap-2">
+                                    <button type="button" id="save-dict-term-btn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Salvar Significado</button>
+                                    <button type="button" id="delete-dict-term-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Excluir Termo</button>
+                                </div>
+                                <div id="dict-actions-confirm" class="hidden flex gap-2 items-center">
+                                    <span class="text-red-700 font-semibold flex-grow">Tem certeza?</span>
+                                    <button type="button" id="confirm-delete-dict-btn" class="manager-btn delete-btn">Confirmar Exclusão</button>
+                                    <button type="button" id="cancel-delete-dict-btn" class="manager-btn cancel-btn">Cancelar</button>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-6">
+
+                            <h3 class="font-semibold text-lg mb-3">Adicionar Novo Termo</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="input-group">
+                                    <label for="new-dict-term">Novo Termo (Ex: CBO)</label>
+                                    <input type="text" id="new-dict-term">
+                                </div>
+                                <div class="input-group">
+                                    <label for="new-dict-meaning">Significado</label>
+                                    <input type="text" id="new-dict-meaning">
+                                </div>
+                            </div>
+                            <button type="button" id="add-dict-term-btn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full sm:w-auto">Adicionar ao Dicionário</button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+
+            <!-- Coluna de Resultados -->
+            <div class="sticky top-8 self-start">
+                 <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800">Resultados Gerados</h2>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="font-semibold mb-2">Nome da Campanha:</h3>
+                            <div class="result-box"><span id="campaign-name-output"></span><button class="copy-btn" data-target="campaign-name-output" aria-label="Copiar nome da campanha">Copiar</button></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Nome do Conjunto:</h3>
+                            <div class="result-box"><span id="adset-name-output"></span><button class="copy-btn" data-target="adset-name-output" aria-label="Copiar nome do conjunto">Copiar</button></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Nome do Anúncio:</h3>
+                            <div class="result-box"><span id="ad-name-output"></span><button class="copy-btn" data-target="ad-name-output" aria-label="Copiar nome do anúncio">Copiar</button></div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">Parâmetro UTM:</h3>
+                            <div class="result-box"><span id="utm-output"></span><button class="copy-btn" data-target="utm-output" aria-label="Copiar parâmetro UTM">Copiar</button></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                        <h4 class="font-bold text-blue-800">Nota Importante</h4>
+                        <p class="text-blue-700 mt-1 text-sm">Manter a consistência na nomenclatura é crucial para a análise de dados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="tooltip" role="tooltip"></div>
+    <div id="notification" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
